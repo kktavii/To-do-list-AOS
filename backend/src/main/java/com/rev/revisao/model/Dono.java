@@ -1,31 +1,29 @@
 package com.rev.revisao.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "donos")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Dono {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "O nome do dono é obrigatório")
+    @Size(min = 2, max = 100)
     private String nome;
-    private String telefone;
 
-    public Dono(int id, String nome, String telefone) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-    }
+    @OneToMany(mappedBy = "dono", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cachorro> cachorros;
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-
-    public String getTelefone() { return telefone; }
-    public void setTelefone(String telefone) { this.telefone = telefone; }
-
-    @Override
-    public String toString() {
-        return "Dono{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", telefone='" + telefone + '\'' +
-                '}';
-    }
+    // Lombok cuidando dos construtores e métodos básicos
 }
