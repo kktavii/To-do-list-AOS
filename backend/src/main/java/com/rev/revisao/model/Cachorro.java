@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-@Entity // Indica que essa classe é uma entidade JPA (tabela no banco de dados)
+@Entity
 @Table(name = "cachorros") // Nome da tabela no banco
 @Data
 @NoArgsConstructor
