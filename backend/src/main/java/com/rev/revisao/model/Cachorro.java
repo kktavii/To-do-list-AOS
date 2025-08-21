@@ -1,43 +1,35 @@
 package com.rev.revisao.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+
+@Entity // Indica que essa classe é uma entidade JPA (tabela no banco de dados)
+@Table(name = "cachorros") // Nome da tabela no banco
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cachorro {
-    private int id;
+
+    @Id // Identificador único da entidade
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto incremento
+    private Long id;
+
+    @NotBlank(message = "O nome é obrigatório")
+    @Size(min = 2, max = 50)
     private String nome;
+
+    @NotNull(message = "A idade é obrigatória")
+    private Integer idade;
+
+    @NotBlank(message = "A raça é obrigatória")
     private String raca;
-    private int idade;
+
+    @ManyToOne(fetch = FetchType.LAZY) // Muitos cachorros para um dono
+    @JoinColumn(name = "dono_id", nullable = false) // Nome da FK na tabela
     private Dono dono;
 
-    public Cachorro(int id, String nome, String raca, int idade, Dono dono) {
-        this.id = id;
-        this.nome = nome;
-        this.raca = raca;
-        this.idade = idade;
-        this.dono = dono;
-    }
-
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-
-    public String getRaca() { return raca; }
-    public void setRaca(String raca) { this.raca = raca; }
-
-    public int getIdade() { return idade; }
-    public void setIdade(int idade) { this.idade = idade; }
-
-    public Dono getDono() { return dono; }
-    public void setDono(Dono dono) { this.dono = dono; }
-
-    @Override
-    public String toString() {
-        return "Cachorro{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", raça='" + raca + '\'' +
-                ", idade=" + idade +
-                ", dono=" + dono.getNome() +
-                '}';
-    }
+    // Construtores, Getters e Setters são gerados automaticamente pelo Lombok.
 }
