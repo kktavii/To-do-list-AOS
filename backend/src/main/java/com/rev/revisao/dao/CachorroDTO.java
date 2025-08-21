@@ -1,37 +1,35 @@
 package com.rev.revisao.dao;
 
-import com.rev.revisao.model.Cachorro;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class CachorroDAO {
-    private List<Cachorro> banco = new ArrayList<>();
+/**
+ * DTO = Data Transfer Object
+ * Usado para transferir dados do cachorro sem expor a entidade inteira (modelo de domínio).
+ */
+@Data // Gera getters, setters, toString, equals, e hashCode
+@NoArgsConstructor // Construtor vazio (obrigatório para serialização/deserialização)
+@AllArgsConstructor // Construtor com todos os argumentos
+public class CachorroDTO {
 
-    public void adicionar(Cachorro cachorro) {
-        banco.add(cachorro);
-        System.out.println("Cachorro adicionado: " + cachorro.getNome());
-    }
+    @NotNull(message = "O nome não pode ser nulo")
+    @NotBlank(message = "O nome não pode estar em branco")
+    @Size(min = 2, max = 50, message = "O nome deve ter entre 2 e 50 caracteres")
+    private String nome;
 
-    public List<Cachorro> listarTodos() {
-        return banco;
-    }
+    @NotNull(message = "A idade é obrigatória")
+    private Integer idade;
 
-    public Cachorro buscarPorId(int id) {
-        for (Cachorro c : banco) {
-            if (c.getId() == id) {
-                return c;
-            }
-        }
-        return null;
-    }
+    @NotBlank(message = "A raça é obrigatória")
+    private String raca;
 
-    public boolean remover(int id) {
-        Cachorro cachorro = buscarPorId(id);
-        if (cachorro != null) {
-            banco.remove(cachorro);
-            System.out.println("Cachorro removido: " + cachorro.getNome());
-            return true;
-        }
-        return false;
-    }
+    @NotNull(message = "O ID do dono é obrigatório")
+    private Long donoId;
+
+    // Construtores gerados pelas anotações do Lombok acima
+    // Métodos como getNome(), setIdade(), etc., também são gerados automaticamente.
 }
