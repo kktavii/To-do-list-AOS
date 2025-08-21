@@ -28,7 +28,7 @@ public class Cachorro {
     private String raca;
 
     @ManyToOne(fetch = FetchType.LAZY) // Muitos cachorros para um dono
-    @JoinColumn(name = "dono_id", nullable = false) // Nome da FK na tabela
+    @JoinColumn(name = "dono_id", nullable = false)
     private Dono dono;
 
     // Construtores, Getters e Setters são gerados automaticamente pelo Lombok.
