@@ -2,32 +2,27 @@ package com.rev.revisao;
 
 import com.rev.revisao.model.Cachorro;
 import com.rev.revisao.model.Dono;
-import com.rev.revisao.dao.CachorroDAO;
 
+import java.util.List;
+
+/**
+ * Classe de exemplo para testar objetos no main.
+ * Pode ser usada para simulações simples fora do Spring Boot.
+ */
 public class App {
+
     public static void main(String[] args) {
-        Dono dono1 = new Dono(1, "Carlos Silva", "99999-1111");
-        Dono dono2 = new Dono(2, "Maria Souza", "98888-2222");
+        // Criando um dono
+        Dono dono = new Dono(1L, "Carlos Silva", null);
 
-        CachorroDAO cachorroDAO = new CachorroDAO();
+        // Criando cachorros associados ao dono
+        Cachorro dog1 = new Cachorro(1L, "Rex", 5, "Labrador", dono);
+        Cachorro dog2 = new Cachorro(2L, "Bidu", 2, "Beagle", dono);
 
-        cachorroDAO.adicionar(new Cachorro(1, "Rex", "Labrador", 5, dono1));
-        cachorroDAO.adicionar(new Cachorro(2, "Luna", "Poodle", 3, dono2));
+        // Vinculando cachorros ao dono
+        dono.setCachorros(List.of(dog1, dog2));
 
-        System.out.println("\n--- Lista de Cachorros ---");
-        for (var c : cachorroDAO.listarTodos()) {
-            System.out.println(c);
-        }
-
-        System.out.println("\n--- Buscar por ID 1 ---");
-        System.out.println(cachorroDAO.buscarPorId(1));
-
-        System.out.println("\n--- Removendo ID 2 ---");
-        cachorroDAO.remover(2);
-
-        System.out.println("\n--- Lista Atualizada ---");
-        for (var c : cachorroDAO.listarTodos()) {
-            System.out.println(c);
-        }
+        // Simulação de exibição
+        System.out.println(dono);
     }
 }
