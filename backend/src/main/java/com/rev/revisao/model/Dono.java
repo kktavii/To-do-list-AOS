@@ -8,7 +8,7 @@ import lombok.*;
 import java.util.List;
 
 @Entity
-@Table(name = "donos")
+@Table(name = "donos") // Nome da tabela
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +24,4 @@ public class Dono {
 
     @OneToMany(mappedBy = "dono", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cachorro> cachorros;
-
-    // Lombok cuidando dos construtores e métodos básicos
 }
